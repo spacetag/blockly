@@ -1,0 +1,13 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="Pseudo" colour="#805ba5">
+    <block type="pseudo_statement">
+      <field name="NAME">pseudocode</field>
+    </block>
+    <block type="pseudo_expression">
+      <field name="NAME">pseudo-expression</field>
+    </block>
+    <block type="pseudo_statement_2">
+      <field name="NAME">pseudocode</field>
+    </block>
+  </category>
+</xml>
