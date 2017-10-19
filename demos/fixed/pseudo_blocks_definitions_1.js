@@ -4,7 +4,7 @@ Blockly.Blocks['pseudo_statement'] = {
         .appendField(new Blockly.FieldTextInput("pseudocode"), "NAME");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(300);
+    this.setColour(230);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -15,7 +15,7 @@ Blockly.Blocks['pseudo_expression'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldTextInput("pseudo-expression"), "NAME");
     this.setOutput(true, null);
-    this.setColour(300);
+    this.setColour(230);
  this.setTooltip("");
  this.setHelpUrl("");
   }

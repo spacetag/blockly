@@ -1,14 +1,17 @@
 Blockly.JavaScript['pseudo_statement'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  // TODO: Assemble JavaScript into code variable.
-  var code = '...;\n';
+  // From: generators/javascript/procedures.js
+  // Call a procedure with no return value.
+  var funcName = Blockly.JavaScript.variableDB_.getName(
+      block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+  var code = funcName + '();\n';
   return code;
 };
 
 Blockly.JavaScript['pseudo_expression'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  // TODO: Assemble JavaScript into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  // From: generators/javascript/procedures.js
+  // Call a procedure with a return value.
+  var funcName = Blockly.JavaScript.variableDB_.getName(
+      block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+  var code = funcName + '()';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
