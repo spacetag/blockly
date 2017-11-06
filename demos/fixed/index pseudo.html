@@ -60,6 +60,7 @@
 
   <script>
 
+    counter = 1
     var workspace = Blockly.inject('blocklyDiv',
         {media: '../../media/',
          toolbox: document.getElementById('toolbox')});
@@ -71,6 +72,22 @@
       document.getElementById('textarea').value = code;
     }
     workspace.addChangeListener(myUpdateFunction);
+
+    function addFunctionBlock(event) {
+      if (event.type == Blockly.Events.BLOCK_CREATE &&
+          workspace.getBlockById(event.blockId).type == "pseudo_statement") {
+        workspace.getBlockById(event.blockId).setFieldValue("pseudocode" + counter, "NAME")
+        // console.log("EVENT")
+        pseudoBody = workspace.newBlock('procedures_defnoreturn');
+        pseudoBody.setFieldValue("pseudocode" + counter, "NAME")
+        console.log(pseudoBody)
+        pseudoBody.initSvg()
+        pseudoBody.render()
+        workspace.addTopBlock(pseudoBody)
+        counter += 1
+      }
+    }
+    workspace.addChangeListener(addFunctionBlock);
 
     // function myUpdateFunctionP(event) {
     //   var code = Blockly.Python.workspaceToCode(workspace);
