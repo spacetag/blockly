@@ -167,7 +167,7 @@
     }
     workspace.addChangeListener(myUpdateFunction);
 
-    function addFunctionBlock(event) {
+    function addFunctionNoReturnBlock(event) {
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_statement") {
         workspace.getBlockById(event.blockId).setFieldValue("pseudocode" + counter, "NAME")
@@ -181,7 +181,23 @@
         counter += 1
       }
     }
-    workspace.addChangeListener(addFunctionBlock);
+    workspace.addChangeListener(addFunctionNoReturnBlock);
+
+    function addFunctionReturnBlock(event) {
+      if (event.type == Blockly.Events.BLOCK_CREATE &&
+          workspace.getBlockById(event.blockId).type == "pseudo_expression") {
+        workspace.getBlockById(event.blockId).setFieldValue("pseudoexpression" + counter, "NAME")
+        // console.log("EVENT")
+        pseudoBody = workspace.newBlock('procedures_defreturn');
+        pseudoBody.setFieldValue("pseudoexpression" + counter, "NAME")
+        console.log(pseudoBody)
+        pseudoBody.initSvg()
+        pseudoBody.render()
+        workspace.addTopBlock(pseudoBody)
+        counter += 1
+      }
+    }
+    workspace.addChangeListener(addFunctionReturnBlock);
 
     // function myUpdateFunctionP(event) {
     //   var code = Blockly.Python.workspaceToCode(workspace);
