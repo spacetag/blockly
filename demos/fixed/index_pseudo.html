@@ -161,19 +161,18 @@
 
 
 
-    function myUpdateFunction(event) {
+    function updateJsTextarea(event) {
       var code = Blockly.JavaScript.workspaceToCode(workspace);
       document.getElementById('textarea').value = code;
     }
-    workspace.addChangeListener(myUpdateFunction);
+    workspace.addChangeListener(updateJsTextarea);
 
     function addFunctionNoReturnBlock(event) {
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_statement") {
-        workspace.getBlockById(event.blockId).setFieldValue("pseudocode" + counter, "NAME")
-        // console.log("EVENT")
+        workspace.getBlockById(event.blockId).setFieldValue("pseudo_code_" + counter, "NAME")
         pseudoBody = workspace.newBlock('procedures_defnoreturn');
-        pseudoBody.setFieldValue("pseudocode" + counter, "NAME")
+        pseudoBody.setFieldValue("pseudo_code_" + counter, "NAME")
         console.log(pseudoBody)
         pseudoBody.initSvg()
         pseudoBody.render()
@@ -186,10 +185,9 @@
     function addFunctionReturnBlock(event) {
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_expression") {
-        workspace.getBlockById(event.blockId).setFieldValue("pseudoexpression" + counter, "NAME")
-        // console.log("EVENT")
+        workspace.getBlockById(event.blockId).setFieldValue("pseudo_expression_" + counter, "NAME")
         pseudoBody = workspace.newBlock('procedures_defreturn');
-        pseudoBody.setFieldValue("pseudoexpression" + counter, "NAME")
+        pseudoBody.setFieldValue("pseudo_expression_" + counter, "NAME")
         console.log(pseudoBody)
         pseudoBody.initSvg()
         pseudoBody.render()
@@ -198,12 +196,6 @@
       }
     }
     workspace.addChangeListener(addFunctionReturnBlock);
-
-    // function myUpdateFunctionP(event) {
-    //   var code = Blockly.Python.workspaceToCode(workspace);
-    //   document.getElementById('textareap').value = code;
-    // }
-    // workspace.addChangeListener(myUpdateFunctionP);
 
     // From: demos/generator/index.html
     function runCode() {
