@@ -154,6 +154,11 @@
 
 
   <script>
+    pseudoStatementBlocks = []
+    pseudoExpressionBlocks = []
+    pseudoStatementBodyBlocks = []
+    pseudoExpressionBodyBlocks = []
+
     counter = 1
     var workspace = Blockly.inject('blocklyDiv',
         {media: '../../media/',
@@ -167,35 +172,47 @@
     }
     workspace.addChangeListener(updateJsTextarea);
 
-    function addFunctionNoReturnBlock(event) {
+    function addPseudoStatementBody(event) {
+      // If the user just dragged out a new pseudo_statement block
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_statement") {
-        workspace.getBlockById(event.blockId).setFieldValue("pseudo_code_" + counter, "NAME")
+
+        pseudoStatement = workspace.getBlockById(event.blockId)
+        pseudoStatement.setFieldValue("pseudo_code_" + counter, "NAME")
+        pseudoStatementBlocks.push(pseudoStatement)
+
         pseudoBody = workspace.newBlock('procedures_defnoreturn');
         pseudoBody.setFieldValue("pseudo_code_" + counter, "NAME")
-        console.log(pseudoBody)
         pseudoBody.initSvg()
         pseudoBody.render()
         workspace.addTopBlock(pseudoBody)
+        pseudoStatementBodyBlocks.push(pseudoBody)
+
         counter += 1
       }
     }
-    workspace.addChangeListener(addFunctionNoReturnBlock);
+    workspace.addChangeListener(addPseudoStatementBody);
 
-    function addFunctionReturnBlock(event) {
+    function addPseudoExpressionBody(event) {
+      // If the user just dragged out a new pseudo_expression block
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_expression") {
-        workspace.getBlockById(event.blockId).setFieldValue("pseudo_expression_" + counter, "NAME")
+
+        pseudoExpression = workspace.getBlockById(event.blockId)
+        pseudoExpression.setFieldValue("pseudo_expression_" + counter, "NAME")
+        pseudoExpressionBlocks.push(pseudoExpression)
+
         pseudoBody = workspace.newBlock('procedures_defreturn');
         pseudoBody.setFieldValue("pseudo_expression_" + counter, "NAME")
-        console.log(pseudoBody)
         pseudoBody.initSvg()
         pseudoBody.render()
         workspace.addTopBlock(pseudoBody)
+        pseudoExpressionBodyBlocks.push(pseudoBody)
+
         counter += 1
       }
     }
-    workspace.addChangeListener(addFunctionReturnBlock);
+    workspace.addChangeListener(addPseudoExpressionBody);
 
     // From: demos/generator/index.html
     function runCode() {
