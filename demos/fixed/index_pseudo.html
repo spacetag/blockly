@@ -154,10 +154,8 @@
 
 
   <script>
-    pseudoStatementBlocks = []
-    pseudoExpressionBlocks = []
-    pseudoStatementBodyBlocks = []
-    pseudoExpressionBodyBlocks = []
+    pseudoStatementBodyBlocks = {}
+    pseudoExpressionBodyBlocks = {}
 
     counter = 1
     var workspace = Blockly.inject('blocklyDiv',
@@ -177,18 +175,18 @@
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_statement") {
 
-        pseudoStatement = workspace.getBlockById(event.blockId)
-        pseudoStatement.setFieldValue("pseudo_code_" + counter, "NAME")
-        pseudoStatementBlocks.push(pseudoStatement)
-
         pseudoBody = workspace.newBlock('procedures_defnoreturn');
-        pseudoBody.setFieldValue("pseudo_code_" + counter, "NAME")
+        pseudoBody.setFieldValue("pseudo_statement", "NAME")
         pseudoBody.initSvg()
         pseudoBody.render()
         workspace.addTopBlock(pseudoBody)
-        pseudoStatementBodyBlocks.push(pseudoBody)
+        pseudoStatementBodyBlocks["pseudo_statement"] = pseudoBody
 
+        name = "pseudo_statement_" + counter
         counter += 1
+
+        pseudoStatement = workspace.getBlockById(event.blockId)
+        pseudoStatement.setFieldValue(name, "NAME")
       }
     }
     workspace.addChangeListener(addPseudoStatementBody);
@@ -198,21 +196,59 @@
       if (event.type == Blockly.Events.BLOCK_CREATE &&
           workspace.getBlockById(event.blockId).type == "pseudo_expression") {
 
-        pseudoExpression = workspace.getBlockById(event.blockId)
-        pseudoExpression.setFieldValue("pseudo_expression_" + counter, "NAME")
-        pseudoExpressionBlocks.push(pseudoExpression)
-
         pseudoBody = workspace.newBlock('procedures_defreturn');
-        pseudoBody.setFieldValue("pseudo_expression_" + counter, "NAME")
+        pseudoBody.setFieldValue("pseudo_expression", "NAME")
         pseudoBody.initSvg()
         pseudoBody.render()
         workspace.addTopBlock(pseudoBody)
-        pseudoExpressionBodyBlocks.push(pseudoBody)
+        pseudoExpressionBodyBlocks["pseudo_expression"] = pseudoBody
 
+        name = "pseudo_expression_" + counter
         counter += 1
+
+        pseudoExpression = workspace.getBlockById(event.blockId)
+        pseudoExpression.setFieldValue(name, "NAME")
       }
     }
     workspace.addChangeListener(addPseudoExpressionBody);
+
+    function renamePseudoStatementBody(event) {
+      // If the user just renamed a pseudo statement block
+      if (event.type == Blockly.Events.CHANGE &&
+          workspace.getBlockById(event.blockId).type == "pseudo_statement" &&
+          event.element == "field" &&
+          event.name == "NAME" &&
+          event.oldValue != event.newValue) {
+
+        console.log("Old value", event.oldValue)
+        console.log("new value", event.newValue)
+        pseudoStatement = pseudoStatementBodyBlocks[event.oldValue]
+        delete pseudoStatementBodyBlocks[event.oldValue]
+
+        pseudoStatement.setFieldValue(event.newValue, "NAME")
+        pseudoStatementBodyBlocks[event.newValue] = pseudoStatement
+      }
+    }
+    workspace.addChangeListener(renamePseudoStatementBody);
+
+    function renamePseudoExpressionBody(event) {
+      // If the user just renamed a pseudo expression block
+      if (event.type == Blockly.Events.CHANGE &&
+          workspace.getBlockById(event.blockId).type == "pseudo_expression" &&
+          event.element == "field" &&
+          event.name == "NAME" &&
+          event.oldValue != event.newValue) {
+
+        console.log("Old value", event.oldValue)
+        console.log("new value", event.newValue)
+        pseudoExpression = pseudoExpressionBodyBlocks[event.oldValue]
+        delete pseudoExpressionBodyBlocks[event.oldValue]
+
+        pseudoExpression.setFieldValue(event.newValue, "NAME")
+        pseudoExpressionBodyBlocks[event.newValue] = pseudoExpression
+      }
+    }
+    workspace.addChangeListener(renamePseudoExpressionBody);
 
     // From: demos/generator/index.html
     function runCode() {
