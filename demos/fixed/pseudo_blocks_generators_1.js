@@ -15,3 +15,29 @@ Blockly.JavaScript['pseudo_expression'] = function(block) {
   var code = funcName + '()';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
+
+Blockly.JavaScript['procedures_pseudo_callnoreturn'] = function(block) {
+  // Call a procedure with no return value.
+  var funcName = Blockly.JavaScript.variableDB_.getName(
+      block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+  var args = [];
+  for (var i = 0; i < block.arguments_.length; i++) {
+    args[i] = Blockly.JavaScript.valueToCode(block, 'ARG' + i,
+        Blockly.JavaScript.ORDER_COMMA) || 'null';
+  }
+  var code = funcName + '(' + args.join(', ') + ');\n';
+  return code;
+};
+
+Blockly.JavaScript['procedures_pseudo_callreturn'] = function(block) {
+  // Call a procedure with a return value.
+  var funcName = Blockly.JavaScript.variableDB_.getName(
+      block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+  var args = [];
+  for (var i = 0; i < block.arguments_.length; i++) {
+    args[i] = Blockly.JavaScript.valueToCode(block, 'ARG' + i,
+        Blockly.JavaScript.ORDER_COMMA) || 'null';
+  }
+  var code = funcName + '(' + args.join(', ') + ')';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
