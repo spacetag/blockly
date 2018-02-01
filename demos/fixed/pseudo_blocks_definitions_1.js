@@ -235,3 +235,15 @@ Blockly.Blocks['procedures_defreturn'].renameProcedureDef = function(oldName, ne
         .replace('%1', newName));
   }
 }
+
+Blockly.Blocks['stub'] = {
+  init: function() {
+    this.appendValueInput("unused_function_return_value")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
