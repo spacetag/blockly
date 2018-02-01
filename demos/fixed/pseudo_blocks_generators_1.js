@@ -41,3 +41,9 @@ Blockly.JavaScript['procedures_pseudo_callreturn'] = function(block) {
   var code = funcName + '(' + args.join(', ') + ')';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
+
+Blockly.JavaScript['stub'] = function(block) {
+  var value_unused_function_return_value = Blockly.JavaScript.valueToCode(block, 'unused_function_return_value', Blockly.JavaScript.ORDER_COMMA);
+  var code = value_unused_function_return_value + ';\n';
+  return code;
+};
