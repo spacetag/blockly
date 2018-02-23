@@ -149,7 +149,7 @@ Blockly.Blocks['procedures_pseudo_callreturn'] = {
         .appendField(new Blockly.FieldTextInput("pseudo_expression",
                                                 Blockly.Procedures.renameForCall), "NAME");
     this.setOutput(true);
-    this.setColour(180);
+    this.setColour(300);
     // Tooltip is set in domToMutation.
     this.setHelpUrl(Blockly.Msg.PROCEDURES_CALLRETURN_HELPURL);
     this.arguments_ = [];
@@ -242,7 +242,7 @@ Blockly.Blocks['stub'] = {
         .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(180);
+    this.setColour(300);
  this.setTooltip("");
  this.setHelpUrl("");
   }
