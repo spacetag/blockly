@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<!-- Based on code from Blockly demos -->
 <head>
   <meta charset="utf-8">
   <title>Blockly Demo: Pseudo Blockly</title>
@@ -21,6 +22,11 @@
       font-weight: normal;
       font-size: 140%;
     }
+    /* from blockly/demos/resizable/overlay.html*/
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -29,7 +35,12 @@
   <!-- From: demos/generator/index.html -->
   <button onclick="runCode()">Run JavaScript</button>
 
-  <div id="blocklyDiv" style="height: 380px; width: 1300px;"></div>
+  <div id="blocklyDiv" style="position: absolute;"></div>
+  <table style="height:80%; width:100%">
+    <tr>
+    <td id="blocklyArea" style="height:100%; width:100%"></td>
+    <tr>
+  </table>
 
   <xml id="toolbox" style="display: none">
   <category name="Pseudo" colour="#a55ba5">
@@ -159,11 +170,31 @@
     pseudoExpressionBodyBlocks = {}
 
     counter = 1
+    var blocklyArea = document.getElementById('blocklyArea');
     var workspace = Blockly.inject('blocklyDiv',
         {media: '../../media/',
          toolbox: document.getElementById('toolbox')});
 
 
+    var onresize = function(e) {
+      // Compute the absolute coordinates and dimensions of blocklyArea.
+      var element = blocklyArea;
+      var x = 0;
+      var y = 0;
+      do {
+        x += element.offsetLeft;
+        y += element.offsetTop;
+        element = element.offsetParent;
+      } while (element);
+      // Position blocklyDiv over blocklyArea.
+      blocklyDiv.style.left = x + 'px';
+      blocklyDiv.style.top = y + 'px';
+      blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+      blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+    };
+    window.addEventListener('resize', onresize, false);
+    onresize();
+    Blockly.svgResize(workspace);
 
     function updateJsTextarea(event) {
       var code = Blockly.JavaScript.workspaceToCode(workspace);
