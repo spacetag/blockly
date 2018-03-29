@@ -149,7 +149,7 @@ Blockly.Blocks['procedures_pseudo_callreturn'] = {
         .appendField(new Blockly.FieldTextInput("pseudo_expression",
                                                 Blockly.Procedures.renameForCall), "NAME");
     this.setOutput(true);
-    this.setColour(300);
+    this.setColour("#8e8e8e");
     // Tooltip is set in domToMutation.
     this.setHelpUrl(Blockly.Msg.PROCEDURES_CALLRETURN_HELPURL);
     this.arguments_ = [];
@@ -192,7 +192,7 @@ Blockly.Blocks['procedures_defreturn'] = {
         Blockly.Msg.PROCEDURES_DEFRETURN_COMMENT) {
       this.setCommentText(Blockly.Msg.PROCEDURES_DEFRETURN_COMMENT);
     }
-    this.setColour(Blockly.Blocks.procedures.HUE);
+    this.setColour("#8e8e8e");
     this.setTooltip(Blockly.Msg.PROCEDURES_DEFRETURN_TOOLTIP);
     this.setHelpUrl(Blockly.Msg.PROCEDURES_DEFRETURN_HELPURL);
     this.arguments_ = [];
@@ -242,7 +242,7 @@ Blockly.Blocks['stub'] = {
         .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(300);
+    this.setColour("#8e8e8e");
  this.setTooltip("");
  this.setHelpUrl("");
   }
