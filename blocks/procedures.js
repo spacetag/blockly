@@ -816,10 +816,12 @@ Blockly.Blocks['procedures_callnoreturn'] = {
          */
         var xml = goog.dom.createDom('xml');
         var block = goog.dom.createDom('block');
+        console.log('creatiion block')
+        console.log(block)
         block.setAttribute('type', this.defType_);
         var xy = this.getRelativeToSurfaceXY();
-        var x = xy.x + Blockly.SNAP_RADIUS * (this.RTL ? -1 : 1);
-        var y = xy.y + Blockly.SNAP_RADIUS * 2;
+        var x = 1300; xy.x + Blockly.SNAP_RADIUS * (this.RTL ? -1 : 1) + 150;
+        var y = 600; xy.y + Blockly.SNAP_RADIUS * 2 - 50;
         block.setAttribute('x', x);
         block.setAttribute('y', y);
         var mutation = this.mutationToDom();
@@ -852,12 +854,25 @@ Blockly.Blocks['procedures_callnoreturn'] = {
    */
   customContextMenu: function(options) {
     var option = {enabled: true};
-    option.text = Blockly.Msg.PROCEDURES_HIGHLIGHT_DEF;
+    option.text = "Show pseudocode definition";
     var name = this.getProcedureCall();
     var workspace = this.workspace;
+    var callBlock = this;
     option.callback = function() {
       var def = Blockly.Procedures.getDefinition(name, workspace);
-      def && def.select();
+      if (def) {
+        console.log('context menu highlight def block')
+        console.log(def)
+
+        def.select();
+
+        var callBlockXy = callBlock.getRelativeToSurfaceXY();
+        var defXy = def.getRelativeToSurfaceXY();
+        var x = -defXy.x + callBlockXy.x + Blockly.SNAP_RADIUS * (callBlock.RTL ? -1 : 1) + 200;
+        var y = -defXy.y + callBlockXy.y + Blockly.SNAP_RADIUS * 2 - 50;
+        def.moveBy(x, y)
+
+      }
     };
     options.push(option);
   },
